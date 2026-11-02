@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz cumpleaños, Tatiana 🎂</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    background: linear-gradient(135deg, #18052e, #641b83, #e74498);
+    overflow-x: hidden;
+}
+
+.pantalla {
+    min-height: 100vh;
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: clamp(35px, 8vw, 60px);
+    color: #ffe8a3;
+    text-shadow: 0 0 20px #ff8dd8;
+}
+
+h2 {
+    color: #ffdaef;
+}
+
+p {
+    max-width: 550px;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+button {
+    border: none;
+    padding: 16px 25px;
+    margin: 12px;
+    border-radius: 35px;
+    background: linear-gradient(45deg, #ff4eaa, #a64dff);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 22px #ff9ce6;
+}
+
+button:active {
+    transform: scale(.96);
+}
+
+#regalo {
+    font-size: 110px;
+    background: transparent;
+    box-shadow: none;
+    animation: flotar 2s infinite ease-in-out;
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.torta {
+    position: relative;
+    width: 180px;
+    height: 140px;
+    margin: 25px 0;
+}
+
+.base {
+    position: absolute;
+    bottom: 0;
+    width: 180px;
+    height: 65px;
+    border-radius: 10px 10px 18px 18px;
+    background: linear-gradient(90deg, #b02a92, #ff91d2, #d63f9f);
+    box-shadow: 0 10px 25px #0003;
+}
+
+.crema {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    width: 180px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff0fa;
+}
+
+.velas {
+    position: absolute;
+    bottom: 75px;
+    left: 52px;
+    display: flex;
+    gap: 18px;
+}
+
+.vela {
+    width: 10px;
+    height: 35px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(
+        45deg, white 0 5px, #ff55b9 5px 10px
+    );
+}
+
+.llama {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 12px;
+    height: 18px;
+    border-radius: 50% 50% 45% 45%;
+    background: #ffde69;
+    box-shadow: 0 0 15px #ffb52e;
+    animation: bailar .5s infinite alternate;
+}
+
+@keyframes bailar {
+    from { transform: rotate(-8deg); }
+    to { transform: rotate(8deg) scale(1.1); }
+}
+
+#carta {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    padding: 20px;
+    overflow-y: auto;
+    background: #140622f5;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenido {
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px 22px;
+    border-radius: 22px;
+    background: #fff1fa;
+    color: #572052;
+    text-align: left;
+}
+
+.contenido h2 {
+    text-align: center;
+    color: #b72b8a;
+}
+
+.contenido p {
+    font-size: 15px;
+}
+
+.confeti {
+    position: fixed;
+    top: -20px;
+    z-index: 20;
+    width: 9px;
+    height: 14px;
+    pointer-events: none;
+    animation: caer 4s linear forwards;
+}
+
+@keyframes caer {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: .3;
+    }
+}
+
+#fuegos {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.pantalla, #carta {
+    position: relative;
+}
+
+#inicio, #principal {
+    z-index: 1;
+}
+
+.oculto {
+    display: none !important;
+}
+
+@media(max-width: 480px) {
+    p { font-size: 15px; }
+    .contenido { padding: 22px 17px; }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fuegos"></canvas>
+
+<!-- REGALO INICIAL -->
+<section class="pantalla" id="inicio">
+    <h2>✨ UNA SORPRESA PARA TI ✨</h2>
+    <h1>¡Feliz cumpleaños, Tatiana!</h1>
+    <p>Preparé algo especial para ti. 💖</p>
+
+    <button id="regalo" onclick="abrirRegalo()" aria-label="Abrir regalo">
+        🎁
+    </button>
+
+    <p>👆 Toca el regalo para descubrir tu sorpresa</p>
+</section>
+
+<!-- PÁGINA PRINCIPAL -->
+<section class="pantalla oculto" id="principal">
+    <p>✨ HOY ES UN DÍA ESPECIAL ✨</p>
+
+    <h1>¡Feliz cumpleaños!</h1>
+    <h2>Tatiana 💖</h2>
+
+    <p>
+        Hoy el mundo tiene una razón más para brillar.
+        Que la vida te regale momentos hermosos, sonrisas inesperadas
+        y muchísimas razones para ser feliz.
+    </p>
+
+    <p style="font-size:32px">🎉 🎈 🎁 🥳</p>
+
+    <div class="torta">
+        <div class="velas">
+            <div class="vela"><span class="llama"></span></div>
+            <div class="vela"><span class="llama"></span></div>
+            <div class="vela"><span class="llama"></span></div>
+        </div>
+        <div class="crema"></div>
+        <div class="base"></div>
+    </div>
+
+    <button onclick="abrirCarta()">
+        💌 Tengo una sorpresa para ti
+    </button>
+
+    <p>Hecho con cariño para alguien especial ❤️</p>
+</section>
+
+<!-- CARTA PERSONAL -->
+<div id="carta">
+    <article class="contenido">
+        <h2>💌 Para ti, Jennifer</h2>
+
+        <p>Hola, Jennifer Tatiana Umaña, ¡feliz cumpleaños! 🎂❤️
+
+Espero que disfrutes muchísimo tu día. Probablemente trabajes, bueno, no importa... a lo que vengo... 🤭</p>
+
+        <p>Francamente, pensando en la fecha, me acordé inevitablemente del año pasado y de lo feo que te hablé 💔. Quiero aprovechar hoy, que por dicha nos hablamos y nos llevamos bien (eso creo 😅), para pedirte una disculpa de corazón por eso.
+
+Sé que no estuve bien en un día tan especial para ti, o al menos pienso que un cumpleaños debe ser especial. No sé si me entiendas, en fin.</p>
+
+        <p>Valoro mucho que hoy en día hablemos cada vez menos, pero hablamos jajajaj 🙈</p>
+
+        <p>De verdad te deseo un cumpleaños genial, lleno de puras cosas buenas y momentos felices.
+
+Que nunca te falten motivos para sonreír, personas que te quieran de verdad y sueños por cumplir. Que este nuevo año de vida te traiga muchas alegrías, oportunidades bonitas y recuerdos que te hagan sonreír cada vez que los recuerdes. ✨💖</p>
+
+        <p>¡Pásala increíble! 🥳🎉</p>
+
+        <p style="text-align:center;font-size:20px">
+            Un abrazo ❤️
+        </p>
+
+        <button onclick="cerrarCarta()" style="display:block;margin:20px auto">
+            Cerrar carta 💗
+        </button>
+    </article>
+</div>
+
+<script>
+function abrirRegalo() {
+    document.getElementById("inicio").classList.add("oculto");
+    document.getElementById("principal").classList.remove("oculto");
+
+    confeti(150);
+    fuego(ancho * .25, alto * .3);
+    fuego(ancho * .75, alto * .3);
+    fuego(ancho * .5, alto * .2);
+}
+
+function abrirCarta() {
+    document.getElementById("carta").style.display = "flex";
+    confeti(100);
+}
+
+function cerrarCarta() {
+    document.getElementById("carta").style.display = "none";
+}
+
+document.getElementById("carta").addEventListener("click", function(e) {
+    if (e.target === this) cerrarCarta();
+});
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") cerrarCarta();
+});
+
+function confeti(cantidad) {
+    const colores = [
+        "#ff65bd", "#ffe66d", "#7df9ff",
+        "#bd83ff", "#83ffb0", "#ff895e"
+    ];
+
+    for (let i = 0; i < cantidad; i++) {
+        const pieza = document.createElement("div");
+        pieza.className = "confeti";
+        pieza.style.left = Math.random() * 100 + "vw";
+        pieza.style.backgroundColor =
+            colores[Math.floor(Math.random() * colores.length)];
+        pieza.style.animationDuration = (2.5 + Math.random() * 3) + "s";
+
+        document.body.appendChild(pieza);
+        setTimeout(() => pieza.remove(), 6000);
+    }
+}
+
+const canvas = document.getElementById("fuegos");
+const ctx = canvas.getContext("2d");
+
+let ancho = window.innerWidth;
+let alto = window.innerHeight;
+let particulas = [];
+let ultimoFuego = 0;
+
+function ajustarCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ancho = window.innerWidth;
+    alto = window.innerHeight;
+
+    canvas.width = ancho * dpr;
+    canvas.height = alto * dpr;
+    canvas.style.width = ancho + "px";
+    canvas.style.height = alto + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+window.addEventListener("resize", ajustarCanvas);
+ajustarCanvas();
+
+function fuego(x, y) {
+    const colores = [
+        "#ff70c5", "#ffe66d", "#8ef6ff",
+        "#c99aff", "#8affb7", "#ff9b6a"
+    ];
+
+    const color = colores[Math.floor(Math.random() * colores.length)];
+
+    for (let i = 0; i < 65; i++) {
+        const angulo = Math.random() * Math.PI * 2;
+        const velocidad = 1 + Math.random() * 4;
+
+        particulas.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angulo) * velocidad,
+            vy: Math.sin(angulo) * velocidad,
+            vida: 1,
+            color: color,
+            radio: 1 + Math.random() * 2
+        });
+    }
+}
+
+function animar(tiempo) {
+    ctx.clearRect(0, 0, ancho, alto);
+
+    if (tiempo - ultimoFuego > 1100) {
+        fuego(
+            ancho * (.1 + Math.random() * .8),
+            alto * (.1 + Math.random() * .4)
+        );
+        ultimoFuego = tiempo;
+    }
+
+    particulas = particulas.filter(p => p.vida > .03);
+
+    for (const p of particulas) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += .025;
+        p.vx *= .99;
+        p.vida -= .012;
+
+        ctx.globalAlpha = Math.max(0, p.vida);
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radio, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+
+    requestAnimationFrame(animar);
+}
+
+requestAnimationFrame(animar);
+confeti(45);
+</script>
+
+</body>
+</html>
